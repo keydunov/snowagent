@@ -12,8 +12,8 @@ module SnowAgent
     def process
       @metrics << @queue.pop
 
-      if @metrics.size > 4
-        payload = JSON.dump(@metrics.map(&:to_h))
+      if @metrics.any?
+        payload = JSON.dump({ metrics: @metrics.map(&:to_h) })
 
         # TODO:
         # * requeue data on failure
@@ -25,11 +25,11 @@ module SnowAgent
     end
 
     def post_data(payload)
-      uri = URI(SNOWMAN_URI)
+      uri = SnowAgent.report_uri
       http = Net::HTTP.new(uri.host, uri.port)
 
       req = Net::HTTP::Post.new("#{uri.path}?#{uri.query}")
-      req.body = payload
+      req.body =  payload
 
       response = http.request(req)
       response

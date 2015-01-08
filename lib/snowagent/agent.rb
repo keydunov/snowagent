@@ -12,9 +12,9 @@ module SnowAgent
       end
     end
 
-    Metric = Struct.new(:key, :value, :time)
+    Metric = Struct.new(:name, :value, :at)
 
-    def metric(key, value, time = Time.now)
+    def metric(key, value, time = Time.now.to_i)
       @queue.push(Metric.new(key, value, time))
     end
   end
