@@ -8,8 +8,6 @@ require "snowagent/sender"
 module SnowAgent
   SNOWMAN_HOST = ENV["SNOWMAN_HOST"] || "http://localhost:4567"
 
-  Thread.abort_on_exception = true
-
   def self.metric(*args)
     Agent.instance.metric(*args)
   end

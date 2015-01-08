@@ -6,10 +6,12 @@ module SnowAgent
 
     def initialize
       @queue = Queue.new
+      run_sender
+    end
 
-      Thread.new do
-        Sender.new(@queue).run
-      end
+    def run_sender
+      sender_thread = Thread.new { Sender.new(@queue).run }
+      sender_thread.abort_on_exception = true
     end
 
     Metric = Struct.new(:name, :value, :at)
