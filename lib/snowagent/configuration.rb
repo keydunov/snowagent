@@ -9,10 +9,19 @@ module SnowAgent
     # Number of metrics sent per request
     attr_accessor :batch_size
 
+    # Timeout when waiting for the server to return data in seconds
+    attr_accessor :read_timeout
+
+    # Timout when opening connection to the server
+    attr_accessor :open_timeout
+
     def initialize
       self.server       = ENV['SNOWMANIO_SERVER']
       self.secret_token = ENV['SNOWMANIO_SECRET_TOKEN']
-      self.batch_size   = ENV['SNOWMANIO_BATCH_SIZE'] || 5
+      self.batch_size   = ENV['SNOWMANIO_BATCH_SIZE'].to_i || 5
+
+      self.read_timeout = 1
+      self.open_timeout = 1
     end
 
     # Determines if the agent confiured to send metrics.
