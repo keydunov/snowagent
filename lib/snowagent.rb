@@ -1,18 +1,41 @@
 require 'json'
 require 'uri'
+require 'logger'
 
 require "snowagent/version"
 require "snowagent/agent"
 require "snowagent/sender"
+require "snowagent/configuration"
 
 module SnowAgent
-  SNOWMAN_HOST = ENV["SNOWMAN_HOST"] || "http://localhost:4567"
+  class << self
+    attr_writer :configuration
 
-  def self.metric(*args)
-    Agent.instance.metric(*args)
-  end
+    def logger
+      @logger ||= Logger.new(STDOUT)
+    end
 
-  def self.report_uri
-    @report_uri ||= URI.join(SNOWMAN_HOST, "agent/metrics")
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
+    def agent
+      @agent ||= Agent.new(configuration)
+    end
+
+    def metric(*args)
+      if configuration.configured?
+        agent.metric(*args)
+      else
+        logger.debug "Metric was not send due to configuration."
+      end
+
+      nil
+    end
+
+    def configure
+      yield(configuration)
+      self.agent
+    end
   end
 end
