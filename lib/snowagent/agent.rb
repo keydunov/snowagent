@@ -1,9 +1,5 @@
 module SnowAgent
   class Agent
-    def self.instance
-      @instance ||= new
-    end
-
     def initialize(configuration)
       @queue = Queue.new
 
