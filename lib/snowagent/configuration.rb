@@ -18,7 +18,7 @@ module SnowAgent
     def initialize
       self.server       = ENV['SNOWMANIO_SERVER']
       self.secret_token = ENV['SNOWMANIO_SECRET_TOKEN']
-      self.batch_size   = ENV['SNOWMANIO_BATCH_SIZE'].to_i || 5
+      self.batch_size   = (ENV['SNOWMANIO_BATCH_SIZE'] || 5).to_i
 
       self.read_timeout = 1
       self.open_timeout = 1
