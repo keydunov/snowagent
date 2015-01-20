@@ -4,6 +4,7 @@ require 'logger'
 
 require "snowagent/version"
 require "snowagent/agent"
+require "snowagent/async_strategy"
 require "snowagent/sender"
 require "snowagent/configuration"
 
