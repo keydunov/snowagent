@@ -6,8 +6,8 @@ module SnowAgent
     # Secret access token for authentication with SnowmanIO
     attr_accessor :secret_token
 
-    # Number of metrics sent per request
-    attr_accessor :batch_size
+    # Interval for reporting data to the server
+    attr_accessor :send_interval
 
     # Timeout when waiting for the server to return data in seconds
     attr_accessor :read_timeout
@@ -16,9 +16,9 @@ module SnowAgent
     attr_accessor :open_timeout
 
     def initialize
-      self.server       = ENV['SNOWMANIO_SERVER']
-      self.secret_token = ENV['SNOWMANIO_SECRET_TOKEN']
-      self.batch_size   = (ENV['SNOWMANIO_BATCH_SIZE'] || 5).to_i
+      self.server        = ENV['SNOWMANIO_SERVER']
+      self.secret_token  = ENV['SNOWMANIO_SECRET_TOKEN']
+      self.send_interval = 15
 
       self.read_timeout = 1
       self.open_timeout = 1
@@ -26,7 +26,7 @@ module SnowAgent
 
     # Determines if the agent confiured to send metrics.
     def configured?
-      !server.nil? && !batch_size.nil? # TODO: also check secret_token token
+      !server.nil? # TODO: also check secret_token token
     end
   end
 end
