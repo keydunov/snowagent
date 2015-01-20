@@ -5,6 +5,7 @@ module SnowAgent
       @queue      = queue
       @conf       = conf
       @metrics    = []
+      @send_at    = Time.now.to_i + @conf.send_interval
     end
 
     def run
@@ -12,17 +13,27 @@ module SnowAgent
     end
 
     def process
-      @metrics << @queue.pop
-
-      if @metrics.size >= @conf.batch_size
-        payload = JSON.dump({ metrics: @metrics.map(&:to_h) })
-
-        # TODO:
-        # * requeue data on failure
-        post_data(payload)
-
-        @metrics.clear
+      # Pop metrics from the queue
+      while !@queue.empty?
+        @metrics << @queue.pop
       end
+
+      if @send_at <= Time.now.to_i
+        @send_at = Time.now.to_i + @conf.send_interval
+        send_data if @metrics.any?
+      end
+
+      sleep 1
+    end
+
+    def send_data
+      payload = JSON.dump({ metrics: @metrics.map(&:to_h) })
+
+      # TODO:
+      # * requeue data on failure
+      post_data(payload)
+
+      @metrics.clear
     end
 
     # TODO: use faraday instead of raw net/http?
