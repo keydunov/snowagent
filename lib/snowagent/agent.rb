@@ -1,7 +1,8 @@
 module SnowAgent
   class Agent
     def initialize(configuration)
-      @strategy = AsyncStrategy.new(configuration)
+      strategy_class = configuration.async ? AsyncStrategy : SyncStrategy
+      @strategy      = strategy_class.new(configuration)
     end
 
     Metric = Struct.new(:name, :value, :at)
