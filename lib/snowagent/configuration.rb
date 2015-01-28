@@ -15,6 +15,9 @@ module SnowAgent
     # Timout when opening connection to the server
     attr_accessor :open_timeout
 
+    # Whether send metrics asynchronously or not
+    attr_accessor :async
+
     def initialize
       self.server        = ENV['SNOWMANIO_SERVER']
       self.secret_token  = ENV['SNOWMANIO_SECRET_TOKEN']
@@ -22,6 +25,8 @@ module SnowAgent
 
       self.read_timeout = 1
       self.open_timeout = 1
+
+      self.async        = true
     end
 
     # Determines if the agent confiured to send metrics.

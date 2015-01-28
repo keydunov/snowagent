@@ -4,7 +4,10 @@ require 'logger'
 
 require "snowagent/version"
 require "snowagent/agent"
+require "snowagent/async_strategy"
+require "snowagent/sync_strategy"
 require "snowagent/sender"
+require "snowagent/service"
 require "snowagent/configuration"
 
 module SnowAgent
