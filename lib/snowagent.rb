@@ -31,7 +31,7 @@ module SnowAgent
       if configuration.configured?
         agent.metric(*args)
       else
-        logger.debug "Metric was not send due to configuration."
+        # logger.debug "Metric was not send due to configuration."
       end
 
       nil
