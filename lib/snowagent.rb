@@ -3,6 +3,7 @@ require 'uri'
 require 'logger'
 
 require "snowagent/version"
+require "snowagent/railtie"
 require "snowagent/agent"
 require "snowagent/async_strategy"
 require "snowagent/sync_strategy"

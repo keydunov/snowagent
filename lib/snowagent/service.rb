@@ -6,13 +6,16 @@ module SnowAgent
     def initialize(conf)
       @uri        =  URI.join(conf.server, "agent/metrics")
       @connection = build_connection(conf)
+      @token      = conf.secret_token
     end
 
     def post_data(payload)
       req = Net::HTTP::Post.new("#{@uri.path}?#{@uri.query}")
-      req.body =  JSON.dump(payload)
+      req.body = JSON.dump(payload.merge(token: @token))
+      size = req.body.length
 
       response = @connection.request(req)
+      SnowAgent.logger.debug "POST #{size} bytes to #{@uri}"
 
       response
     end
