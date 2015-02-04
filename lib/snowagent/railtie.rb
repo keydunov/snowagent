@@ -9,12 +9,14 @@ module SnowAgent
         action = event.payload[:action]
         duration = event.duration/1000.0
 
-        SnowAgent.metric("#{controller}##{action}.total_time", duration, :specific_request)
+        # Send only 'request' metric for now
+
+        #SnowAgent.metric("#{controller}##{action}.total_time", duration, :specific_request)
         SnowAgent.metric("request", duration, :request)
 
         # TODO: don't send these metrics so frequent and so ugly
-        SnowAgent.metric("controlles", ApplicationController.subclasses.size, :controllers)
-        SnowAgent.metric("models", ActiveRecord::Base.subclasses.size, :models)
+        #SnowAgent.metric("controlles", ApplicationController.subclasses.size, :controllers)
+        #SnowAgent.metric("models", ActiveRecord::Base.subclasses.size, :models)
       end
     end
   end
