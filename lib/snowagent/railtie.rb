@@ -1,5 +1,4 @@
-require "rails/railtie"
-
+# This module loading only for Rails apps
 module SnowAgent
   class Railtie < Rails::Railtie
     initializer "snowagent.subscribe_notifications" do

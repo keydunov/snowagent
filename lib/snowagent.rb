@@ -3,13 +3,18 @@ require 'uri'
 require 'logger'
 
 require "snowagent/version"
-require "snowagent/railtie"
 require "snowagent/agent"
 require "snowagent/async_strategy"
 require "snowagent/sync_strategy"
 require "snowagent/sender"
 require "snowagent/service"
 require "snowagent/configuration"
+
+begin
+  require "rails/railtie"
+  require "snowagent/railtie"
+rescue LoadError
+end
 
 module SnowAgent
   class << self
