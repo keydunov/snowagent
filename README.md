@@ -1,6 +1,6 @@
 # SnowAgent
 
-TODO: Write a gem description
+[![Gem Version](https://badge.fury.io/rb/snowagent.svg)](http://badge.fury.io/rb/snowagent) [![Build Status](https://travis-ci.org/snowman-io/snowagent.svg)](https://travis-ci.org/snowman-io/snowagent)
 
 ## Installation
 
