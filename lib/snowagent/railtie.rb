@@ -8,7 +8,7 @@ module SnowAgent
         # Count only `html` GET requets
         if event.payload[:method] == "GET" && event.payload[:format] == :html
           duration = event.duration/1000.0
-          SnowAgent.metric("request", duration, :request)
+          SnowAgent.metric("Request", duration, :request)
         end
       end
     end
