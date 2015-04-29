@@ -36,6 +36,13 @@ module SnowAgent
       nil
     end
 
+    def time(key)
+      start = Time.now
+      result = yield
+      metric(key, ((Time.now - start) * 1000).round, "time")
+      result
+    end
+
     def configure
       yield(configuration)
       # do not trigger initialization if not configured
