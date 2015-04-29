@@ -10,12 +10,6 @@ require "snowagent/sender"
 require "snowagent/service"
 require "snowagent/configuration"
 
-begin
-  require "rails/railtie"
-  require "snowagent/railtie"
-rescue LoadError
-end
-
 module SnowAgent
   class << self
     attr_writer :configuration
