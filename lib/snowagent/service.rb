@@ -10,7 +10,7 @@ module SnowAgent
     end
 
     def post_data(payload)
-      req = Net::HTTP::Post.new("#{@uri.path}?#{@uri.query}")
+      req = Net::HTTP::Post.new("#{@uri.path}?#{@uri.query}", headers)
       req.body = JSON.dump(payload.merge(token: @token))
       size = req.body.length
 
@@ -28,6 +28,10 @@ module SnowAgent
       http.open_timeout = conf.open_timeout if conf.open_timeout
 
       http
+    end
+
+    def headers
+      {'Content-Type' =>'application/json'}
     end
   end
 end
