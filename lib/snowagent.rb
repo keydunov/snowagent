@@ -38,7 +38,8 @@ module SnowAgent
 
     def configure
       yield(configuration)
-      self.agent
+      # do not trigger initialization if not configured
+      self.agent if configuration.configured?
     end
   end
 end
